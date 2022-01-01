@@ -1,17 +1,6 @@
 import { Link, Outlet, useLoaderData } from "remix";
 import { getPosts } from "~/post";
 
-// import stylesUrl from "../styles/posts.css";
-
-// export const links: LinksFunction = () => {
-//   return [
-//     {
-//       rel: "stylesheet",
-//       href: stylesUrl
-//     }
-//   ];
-// };
-
 export const loader = async () => {
   return getPosts()
 };
@@ -19,7 +8,7 @@ export const loader = async () => {
 function PostsRoute() {
   const data = useLoaderData();
   return (
-    <div>
+    <div className="posts-list">
       <h1>Here are all the posts</h1>
       <ul>
         {data.postListItems.map((post) => (

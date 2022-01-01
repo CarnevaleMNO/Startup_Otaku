@@ -60,7 +60,7 @@ export default function NewPost() {
         <textarea name="markdown" id="" rows={20} cols={30} />
       </p>
       <p>
-        <button type="submit">
+        <button type="submit" className="btn">
           {transition.submission ? "Creating..." : "Create Post"}
         </button>
       </p>

@@ -1,11 +1,5 @@
-import { Outlet, Link, useLoaderData } from "remix";
+import { Outlet, Link, useLoaderData, Links } from "remix";
 import { getPosts } from "~/post";
-
-// import adminStyles from "~/styles/admin.css";
-//create a stylesheet ref for the admin.css file
-// export let links = () => {
-//     return [{rel: "stylesheet", href: adminStyles}]
-// }
 
 export let loader = () => {
   return getPosts();
@@ -14,8 +8,8 @@ export let loader = () => {
 export default function Admin() {
   let data = useLoaderData();
   return (
-    <>
-      <div>
+    <div className="admin-page">
+      <div className="admin-list">
         <h1>Admin Page</h1>
         <div className="admin-post-list">
           <p>Click on a post to edit the blog post</p>
@@ -29,6 +23,6 @@ export default function Admin() {
         </div>
       </div>
       <Outlet />
-    </>
+    </div>
   );
 }
