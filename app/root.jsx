@@ -6,7 +6,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  redirect,
+  useLoaderData,
+  json,
+  Form,
 } from "remix";
+
+import { getSession } from "~/sessions.server";
+import { destroySession, commitSession } from "~/sessions.server";
+import { auth } from "~/utils/firebase";
+import { getAuth } from "firebase/auth";
+
 import globalStylesUrl from "~/styles/global.css";
 
 export function meta() {
@@ -18,7 +28,84 @@ export function meta() {
   return { title, description, keywords };
 }
 
+export async function loader({ request }) {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  if (session.has("access_token")) {
+      const auth = getAuth();
+    const data = { user: auth.currentUser, error: session.get("error") };
+  
+    const user = auth.currentUser;
+    const userInfo = { displayName: user.displayName };
+    return json(data, userInfo, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  } else {
+    return null;
+  }
+}
+
+export let action = async ({ request }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  if (session.has("access_token")) {
+    return redirect("/", {
+      headers: { "Set-Cookie": await destroySession(session) },
+    });
+  }
+  auth.signOut();
+  return redirect("/");
+};
+
+export const Header = () => {
+  const data = useLoaderData();
+  let loggedIn = data?.user;
+  return (
+    <header className="gradient__bg">
+      <div className="title">
+        <h1>
+          <Link to="/">
+            <span>Startup</span>Otaku
+          </Link>
+        </h1>
+      </div>
+      <nav>
+        <ul>
+          <li key="startups">
+            <Link to="/posts">Blog</Link>
+          </li>
+          <li key="contact">
+            <Link to="/contact">Contact Us</Link>
+          </li>
+          {data?.user.email === "carnevalema89@gmail.com" ? (
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          ) : null }
+          {!loggedIn ? (
+            <li>
+              <Link to="/auth/login">Login</Link>
+            </li>
+          ) : (
+            <li>
+              <Form method="post">
+                <button type="submit" className="navLogoutButton">
+                  Logout
+                </button>
+              </Form>
+            </li>
+          )}
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
 export default function App() {
+  const data = useLoaderData();
+
   return (
     <html lang="en">
       <head>
@@ -57,30 +144,3 @@ export const links = () => [
 //     </div>
 //   );
 // }
-
-export const Header = () => {
-  return (
-    <header>
-      <div className="title">
-        <h1>
-          <Link to="/">
-            <span>Startup</span>Otaku
-          </Link>
-        </h1>
-      </div>
-      <nav>
-        <ul>
-          <li key="startups">
-            <Link to="/posts">Blog</Link>
-          </li>
-          <li key="contact">
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li>
-            <Link to="/admin">Admin</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  );
-};

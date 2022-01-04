@@ -10,19 +10,40 @@ export async function getPost(slug) {
 
   let title = foundSlug.title;
   let html = marked(foundSlug.markdown);
+  let photo = foundSlug.photo;
+  let description = foundSlug.description;
 
-  return { slug, title, html };
+  return { slug, title, html, photo, description };
 }
 
 export async function getPosts() {
   const data = {
     postListItems: await db.post.findMany({
       take: 20,
-      select: { id: true, slug: true, title: true, markdown: true },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        markdown: true,
+        photo: true,
+        description: true,
+      },
       orderBy: { createdAt: "desc" },
     }),
   };
 
+  return data;
+}
+
+export async function getQueriedPosts(startup) {
+  const data = {
+    postListItems: await db.post.findMany({
+      where: {
+        title: startup || undefined,
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+  };
   return data;
 }
 
@@ -32,6 +53,8 @@ export async function createPost(post) {
       title: post.title,
       slug: post.slug,
       markdown: post.markdown,
+      photo: post.photo,
+      description: post.description,
     },
   });
 
@@ -48,8 +71,10 @@ export async function getPostEdit(slug) {
   let id = foundSlug.id;
   let title = foundSlug.title;
   let markdown = foundSlug.markdown;
+  let photo = foundSlug.photo;
+  let description = foundSlug.description;
 
-  return { id, slug, title, markdown };
+  return { id, slug, title, markdown, photo, description };
 }
 
 export async function updatePost(post) {
@@ -62,8 +87,20 @@ export async function updatePost(post) {
       title: post.title,
       slug: post.slug,
       markdown: post.markdown,
+      photo: post.photo,
+      description: post.description,
     },
   });
 
   return getPost(post.slug);
+}
+
+export async function deletePost(post) {
+  await db.post.delete({
+    where: {
+      id: post,
+    },
+  });
+
+  return post;
 }

@@ -11,10 +11,12 @@ datasource db {
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  slug      String
-  title     String
-  markdown  String
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  slug        String
+  title       String
+  markdown    String
+  photo       String
+  description String
 }

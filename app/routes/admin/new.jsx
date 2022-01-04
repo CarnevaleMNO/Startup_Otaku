@@ -6,36 +6,34 @@ export let action = async ({ request }) => {
   let title = formData.get("title");
   let slug = formData.get("slug");
   let markdown = formData.get("markdown");
+  let photo = formData.get("photo");
+  let description = formData.get("description");
 
   let errors = {};
   if (!title) errors.title = true;
   if (!slug) errors.slug = true;
   if (!markdown) errors.markdown = true;
+  if (!photo) errors.photo = true;
+  if (!description) errors.description = true;
 
   if (Object.keys(errors).length) {
     return errors;
   }
 
-  await createPost({ title, slug, markdown });
+  await createPost({ title, slug, markdown, photo, description });
 
   return redirect("/admin");
 };
 
 export default function NewPost() {
-  // pull in errors from our action using the useActionData() hook
-  let errors = useActionData();
-  // transition will allow us to create a better user experience by updating the text of the submit button while creating the blog post
-  let transition = useTransition();
-  // we are going to create the slug for the user
-  let slug = "";
 
-  // as the Title input is updated we will generate the slug automatically.
-  // My First Post slug would equal 'my-first-post'. We will convert to lower case and we will strip spaces and replace with hyphens
+  let errors = useActionData();
+  let transition = useTransition();
+  
+  let slug = "";
   const handleChange = (e) => {
     let text = e.target.value;
-    // using regex and replace, let's convert spaces to dashes
     slug = text.replace(/\s/g, "-");
-    // lets set the value of the slug text box to be our new slug in lowercase
     document.getElementById("slugInput").value = slug.toLowerCase();
   };
   return (
@@ -51,6 +49,18 @@ export default function NewPost() {
           {" "}
           Post Slug: {errors?.slug && <em>Slug is required</em>}
           <input placeholder={slug} id="slugInput" type="text" name="slug" />
+        </label>
+      </p>
+      <p>
+        <label htmlFor="">
+          Post Description: {errors?.description && <em>Description is required</em>}{" "}
+          <input type="text" name="description" />
+        </label>
+      </p>
+      <p>
+        <label htmlFor="">
+          Post Photo: {errors?.photo && <em>Photo is required</em>}{" "}
+          <input type="text" name="photo" />
         </label>
       </p>
       <p>
