@@ -114,13 +114,12 @@ nav a:hover {
 
 .posts-list {
   max-width: 100%;
-  margin-left: 1rem;
 }
 
-@media (min-width: 650px){
-  .posts-list {
-    width: 65%;
-  }
+.posts-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .posts-list h1 {
@@ -132,6 +131,7 @@ nav a:hover {
 .posts-list li {
   font-size: 1.2rem;
   list-style: none;
+  margin: .5rem;
 }
 
 .posts-list a {
@@ -191,11 +191,12 @@ nav a:hover {
 }
 
 .card {
-  width: 95%;
-  border-bottom: 1px solid var(--color-text);
-  padding-bottom: 2rem;
+  width: 10rem;
+  border: 1px solid var(--color-text);
+  padding: 2rem;
   margin-bottom: 1rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
 }
 
@@ -204,17 +205,17 @@ nav a:hover {
   font-weight: 400;
 }
 
-.left-side {
+.bottom-side {
   width: 70%;
 }
 
 .post-photo {
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 5px;
 }
 
-.right-side {
-  max-width: 20%;
+.top-side {
+  max-width: 100%;
 }
 
 /* Buttons */
@@ -239,14 +240,6 @@ nav a:hover {
 }
 
 /* Admin Page */
-
-/* header {
-  background-color: #c99156;
-}
-
-header span {
-  color: #000501;
-} */
 
 .admin-page {
   max-width: 100%;
@@ -327,7 +320,7 @@ input[type="email"] {
 
 textarea {
   width: 100%;
-  height: 250px;
+  height: 400px;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
@@ -378,19 +371,38 @@ textarea {
 }
 
 /* $Slug */
-.slug {
-  width: 100%;
+.slug-page {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 65vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.slug {
+  width: 80%;
   justify-content: space-around;
   margin-top: 1rem;
   line-height: 2;
 }
 
 .postDisplayPhoto {
-  max-width: 4rem;
-  max-height: 4rem;
+  width: 8rem;
+  height: 8rem;
   border-radius: 5px;
   display: inline-block;
+}
+
+.editor-section {
+  display: flex;
+}
+
+.editor-info {
+  display: flex;
+  flex-direction: column;
+  font-style: italic;
+  margin-left: 1rem;
 }
 
 /* Front page */
@@ -402,6 +414,7 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .front-page h1 {
@@ -470,3 +483,21 @@ textarea {
   font-weight: bold;
   font-size: 16px;
 }
+
+/* Contact page */
+.contact-page {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.contact-page h1 {
+  font-size: 4rem;
+  font-weight: 400;
+  display: inline-block;
+}
+

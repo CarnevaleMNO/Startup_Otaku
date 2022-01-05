@@ -12,8 +12,9 @@ export async function getPost(slug) {
   let html = marked(foundSlug.markdown);
   let photo = foundSlug.photo;
   let description = foundSlug.description;
+  let createdAt = foundSlug.createdAt.toLocaleDateString();
 
-  return { slug, title, html, photo, description };
+  return { slug, title, html, photo, description, createdAt };
 }
 
 export async function getPosts() {

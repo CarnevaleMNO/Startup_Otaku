@@ -32,12 +32,10 @@ export async function loader({ request }) {
   const session = await getSession(request.headers.get("Cookie"));
 
   if (session.has("access_token")) {
-      const auth = getAuth();
+    const auth = getAuth();
     const data = { user: auth.currentUser, error: session.get("error") };
-  
-    const user = auth.currentUser;
-    const userInfo = { displayName: user.displayName };
-    return json(data, userInfo, {
+
+    return json(data, {
       headers: {
         "Set-Cookie": await commitSession(session),
       },
@@ -83,7 +81,7 @@ export const Header = () => {
             <li>
               <Link to="/admin">Admin</Link>
             </li>
-          ) : null }
+          ) : null}
           {!loggedIn ? (
             <li>
               <Link to="/auth/login">Login</Link>
@@ -132,6 +130,10 @@ export const links = () => [
   {
     href: "https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap",
     rel: "stylesheet",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css",
   },
 ];
 
