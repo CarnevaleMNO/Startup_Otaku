@@ -36,11 +36,11 @@ function PostsRoute() {
         </ul>
       </div>
       <div className="posts-list">
-        <h1>Startups</h1>
+        <h1>The Latest</h1>
         <ul>
           {data.postListItems.map((post) => (
             <li key={post.slug} className="card">
-            <div className="top-side">
+              <div className="top-side">
                 <img src={post.photo} alt="" className="post-photo" />
               </div>
               <div className="bottom-side">
@@ -48,7 +48,6 @@ function PostsRoute() {
                 <p className="post-description">{post.description}</p>
                 <Link to={post.slug}>Read More --></Link>
               </div>
-              
             </li>
           ))}
         </ul>

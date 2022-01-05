@@ -77,7 +77,7 @@ export const Header = () => {
           <li key="contact">
             <Link to="/contact">Contact Us</Link>
           </li>
-          {data?.user.email === "carnevalema89@gmail.com" ? (
+          {data?.user.email === "startupotaku@gmail.com" ? (
             <li>
               <Link to="/admin">Admin</Link>
             </li>

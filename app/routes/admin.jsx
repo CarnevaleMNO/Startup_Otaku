@@ -27,7 +27,7 @@ export async function loader({ request }) {
     
   }
   const userInfo = { displayName: user.displayName, email: user.email};
-  if (userInfo.email !== "carnevalema89@gmail.com") {
+  if (userInfo.email !== "startupotaku@gmail.com") {
     return redirect("/posts");
   }
   return (

@@ -1,4 +1,4 @@
-import { useLoaderData, Meta } from "remix";
+import { useLoaderData, Meta, Link } from "remix";
 import invariant from "tiny-invariant";
 import { getPost } from "~/post";
 
@@ -13,13 +13,17 @@ export default function PostSlug() {
     <div className="slug-page">
       <div className="slug">
         <div className="editor-section">
-          <div className="img">
+        <div className="top-left">
+        <div className="img">
             <img className="postDisplayPhoto" src={post.photo} alt="" />
           </div>
           <div className="editor-info">
             <p>created by: poolside</p>
             <p>created at: {post.createdAt}</p>
           </div>
+        </div>
+          
+          <Link to="/posts">Go back</Link>
         </div>
 
         <div
